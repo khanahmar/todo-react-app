@@ -8,7 +8,7 @@ function App() {
     JSON.parse(localStorage.getItem("list"))
   )
 
-  const [isActive, setActive] = React.useState(false)
+  let checkStyle = ""
 
   React.useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list))
@@ -21,10 +21,12 @@ function App() {
   }
 
   function enterTodo() {
-    setTodo((prevValue) => "")
-    setList((prevList) => {
-      return [...prevList, todo]
-    })
+    if (todo !== "") {
+      setTodo((prevValue) => "")
+      setList((prevList) => {
+        return [...prevList, todo]
+      })
+    }
   }
 
   function delItem(item) {
@@ -54,10 +56,13 @@ function App() {
       <ul className="list">
         {list.map((item, index) => {
           return (
-            <li key={index} className={isActive ? "check" : ""}>
+            <li key={index} className={checkStyle}>
               {item}
               <i
-                onClick={() => setActive((prevValue) => !prevValue)}
+                onClick={() => {
+                  console.log(checkStyle)
+                  checkStyle = "check"
+                }}
                 class="fa-solid fa-check-to-slot"
               ></i>
               <i onClick={() => delItem(item)} class="fa-solid fa-trash"></i>
