@@ -1,11 +1,13 @@
 import "./App.css"
 import React from "react"
+import Li from "./Li"
+import { nanoid } from "nanoid"
 
 function App() {
   const [todo, setTodo] = React.useState("")
 
-  const [list, setList] = React.useState(() =>
-    JSON.parse(localStorage.getItem("list"))
+  const [list, setList] = React.useState(
+    () => JSON.parse(localStorage.getItem("list")) || []
   )
 
   let checkStyle = ""
@@ -20,9 +22,13 @@ function App() {
     })
   }
 
+  function checkClass(id) {
+    console.log(id)
+  }
+
   function enterTodo() {
     if (todo !== "") {
-      setTodo((prevValue) => "")
+      setTodo("")
       setList((prevList) => {
         return [...prevList, todo]
       })
@@ -56,17 +62,13 @@ function App() {
       <ul className="list">
         {list.map((item, index) => {
           return (
-            <li key={index} className={checkStyle}>
-              {item}
-              <i
-                onClick={() => {
-                  console.log(checkStyle)
-                  checkStyle = "check"
-                }}
-                class="fa-solid fa-check-to-slot"
-              ></i>
-              <i onClick={() => delItem(item)} class="fa-solid fa-trash"></i>
-            </li>
+            <Li
+              checkClass={checkClass}
+              id={nanoid()}
+              item={item}
+              index={index}
+              delItem={delItem}
+            />
           )
         })}
       </ul>
