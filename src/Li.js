@@ -1,11 +1,13 @@
 import React from "react"
 
 export default function Li(props) {
+  const [checked, setChecked] = React.useState(false)
+
   return (
-    <li key={props.index}>
+    <li className={checked ? "check" : ""} key={props.index}>
       {props.item}
       <i
-        onClick={(id) => props.checkClass(props.id)}
+        onClick={() => setChecked(!checked)}
         class="fa-solid fa-check-to-slot"
       ></i>
       <i

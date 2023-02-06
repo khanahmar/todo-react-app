@@ -1,7 +1,6 @@
 import "./App.css"
 import React from "react"
 import Li from "./Li"
-import { nanoid } from "nanoid"
 
 function App() {
   const [todo, setTodo] = React.useState("")
@@ -9,8 +8,6 @@ function App() {
   const [list, setList] = React.useState(
     () => JSON.parse(localStorage.getItem("list")) || []
   )
-
-  let checkStyle = ""
 
   React.useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list))
@@ -20,10 +17,6 @@ function App() {
     setTodo((prevTodo) => {
       return event.target.value
     })
-  }
-
-  function checkClass(id) {
-    console.log(id)
   }
 
   function enterTodo() {
@@ -40,10 +33,13 @@ function App() {
     setList(newTodo)
   }
 
-  console.log(list)
-
   return (
     <div className="App">
+      <img
+        className="todo-img"
+        width="400px"
+        src="https://cdn.pixabay.com/photo/2020/01/21/18/39/todo-4783676__340.png"
+      />
       <div className="inp-cont">
         <input
           name="todo"
@@ -61,15 +57,7 @@ function App() {
       </div>
       <ul className="list">
         {list.map((item, index) => {
-          return (
-            <Li
-              checkClass={checkClass}
-              id={nanoid()}
-              item={item}
-              index={index}
-              delItem={delItem}
-            />
-          )
+          return <Li id={index} item={item} index={index} delItem={delItem} />
         })}
       </ul>
     </div>
